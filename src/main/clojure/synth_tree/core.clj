@@ -19,17 +19,17 @@
       Integer/MIN_VALUE
       (int f))))
 
+(defn sample2int [s] (float2int (* 0.9 Integer/MAX_VALUE s)))
+
 (defn arrb []
   (let [bb (ByteBuffer/allocate (* 44100 4))]
 
     (loop [i 0]
       (when (< i (count arr))
-        (.putInt bb (float2int (* Integer/MAX_VALUE (aget arr i))))
+        (.putInt bb (sample2int (aget arr i)))
         (recur (inc i))))
 
-    (.array bb)
-
-    ))
+    (.array bb)))
 
 
 (defn -main []

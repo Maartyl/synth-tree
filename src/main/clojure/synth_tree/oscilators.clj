@@ -1,5 +1,6 @@
 (ns synth-tree.oscilators
-  (:require [synth-tree.glob :as G])
+  (:require [synth-tree.glob :as G]
+            [synth-tree.named-tones :as nt])
   (:import [maa.synthTree SynthNode OscilatorSine OscilatorSquare OscilatorRoot]))
 
   ;; freq: in hertz
