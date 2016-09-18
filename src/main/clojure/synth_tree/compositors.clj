@@ -1,6 +1,9 @@
 (ns synth-tree.compositors
   (:require [synth-tree.glob :as G])
-  (:import [maa.synthTree SynthNode]))
+  (:import [maa.synthTree Add SynthNode]))
+
+
+(defn add [nodes] (Add. (into-array SynthNode nodes)))
 
 
 
