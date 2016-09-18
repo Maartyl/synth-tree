@@ -5,6 +5,7 @@
            [javax.sound.sampled AudioFormat AudioSystem SourceDataLine]
            [java.nio ByteBuffer]))
 
+; test: proof of concept
 
 (def arr (float-array 44100))
 
@@ -25,7 +26,7 @@
 
 (defn -main []
   (println "start")
-  (def s (oscilator :sine 666))
+  (def s (oscilator :sine 66))
 
   (.samplesAt s 0 44100 arr)
   (println "generated")

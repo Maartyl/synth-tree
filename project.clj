@@ -2,7 +2,7 @@
   :main "synth-tree.core"
   :source-paths ["src" "src/main/clojure"]
   :java-source-paths ["src/main/java" "test/main/java"]
-  :description "FIXME: write description"
+  :description "simple idea of a tree structured synthesizer"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
