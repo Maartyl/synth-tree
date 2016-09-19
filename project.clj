@@ -1,5 +1,5 @@
 (defproject synth-tree "0.1.0-SNAPSHOT"
-  :main "synth-tree.core"
+  :main synth-tree.core
   :source-paths ["src" "src/main/clojure"]
   :java-source-paths ["src/main/java" "test/main/java"]
   :description "simple idea of a tree structured synthesizer"
