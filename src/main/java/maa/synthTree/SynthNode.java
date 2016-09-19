@@ -77,4 +77,7 @@ public interface SynthNode {
     default float[] samplesAt(long position, int length){
         return samplesAt(position, length, new float[length]);
     }
+    
+    //samples are not necessarily only samples: they can be piped into other DYNAMIC nodes to mean:
+    // - volume, frequency, .....
 }

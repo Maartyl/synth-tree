@@ -3,7 +3,7 @@
   (:import [maa.synthTree Add SynthNode]))
 
 
-(defn add [nodes] (Add. (into-array SynthNode nodes)))
+(defn add [& nodes] (Add. (into-array SynthNode nodes)))
 
 
 
