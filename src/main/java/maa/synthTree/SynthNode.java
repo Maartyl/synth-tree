@@ -53,7 +53,8 @@ public interface SynthNode {
     // implementation variant that will NEVER be called from outside of the class
     // interfaces just don't allow protected defaults...
     // arr should ALWAYS be long enough
-    float[] samplesAt_impl(long position, int length, float[] arr);
+    // end is AFTER end (like C++)
+    float[] samplesAt_impl(long position, float[] arr, int arrStart, int arrEnd);
     
     // FOR position >= end:
     // - must return 0 (if nothing meaningful)
@@ -68,14 +69,28 @@ public interface SynthNode {
     // always fills arr from 0
     //TODO: concepts for stereo sound (arr=[lrlrlrlr])
     //@final
-    default float[] samplesAt(long position, int length, float[] arr){
-        if ((arr == null || arr.length < length))
-            return samplesAt(position, length); //reuse creation of array in other overloed
+    default float[] samplesAt(long position, float[] arr, final int arrStart, final int arrEnd){
+        if ((arr == null || arr.length < arrEnd))
+            return samplesAt(position, arrEnd - arrStart, arrStart); //reuse creation of array in other overloed
         
-        return samplesAt_impl(position, length, arr);
+        return samplesAt_impl(position, arr, arrStart, arrEnd);
     }
+    default float[] samplesAt(long position, int length, float[] arr, final int arrStart){
+        if ((arr == null || arr.length < (length+arrStart)))
+            return samplesAt(position, length, arrStart); //reuse creation of array in other overloed
+        
+        return samplesAt_impl(position, arr, arrStart, arrStart+length);
+    }
+    default float[] samplesAt(long position, int length, float[] arr){
+        return samplesAt(position, length, arr, 0);
+    }
+    //fills new array from arrStart
+    default float[] samplesAt(long position, int length, final int arrStart){
+        return samplesAt(position, length, new float[length+arrStart], arrStart);
+    }
+    //fills new array from 0
     default float[] samplesAt(long position, int length){
-        return samplesAt(position, length, new float[length]);
+        return samplesAt(position, length, 0);
     }
     
     //samples are not necessarily only samples: they can be piped into other DYNAMIC nodes to mean:

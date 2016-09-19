@@ -85,14 +85,14 @@ public final class Add implements SynthNode {
   }
 
   @Override
-  public float[] samplesAt_impl(long position, int length, float[] arr) {
+  public float[] samplesAt_impl(long position, float[] arr, int arrStart, int arrEnd) {
     switch (nodes.length) {
       case 0: //fill with zeroes
-        return Zero.SINGLETON.samplesAt(position, length, arr);
+        return Zero.SINGLETON.samplesAt(position, arrEnd, arr);
       case 1:
-        return nodes[0].samplesAt(position, length, arr);
+        return nodes[0].samplesAt(position, arrEnd, arr);
       default:
-        return samplesMulti(position, length, arr);
+        return samplesMulti(position, arrEnd, arr);
     }
   }
 

@@ -50,9 +50,9 @@ public abstract class Map implements SynthNode {
   abstract float map(long position, float sample);
 
   @Override
-  public float[] samplesAt_impl(long position, int length, float[] arr) {
-    arr = source.samplesAt(position, length, arr);
-    for (int i = 0; i < length; i++) {
+  public float[] samplesAt_impl(long position, float[] arr, int arrStart, int arrEnd) {
+    arr = source.samplesAt(position, arrEnd, arr, arrStart);
+    for (int i = arrStart; i < arrEnd; i++) {
       arr[i] = map(position+i, arr[i]);
     }
     return arr;

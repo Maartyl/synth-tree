@@ -24,17 +24,42 @@
 package maa.synthTree;
 
 /**
+ * 
+ * begin(), end() is determined by Data source (not args)
  *
  * @author maartyl
  */
-public interface Gen extends SynthNode {
+public abstract class Zip implements SynthNode {
   
-  float sampleAt(long position);
+  private final SynthNode sourceData;
+  private final SynthNode sourceArgs;
+
+  public Zip(SynthNode sourceData, SynthNode sourceArgs) {
+    if (sourceData == null)
+      throw new IllegalArgumentException("Map.sourceData cannot be null");
+    if (sourceArgs == null)
+      throw new IllegalArgumentException("Map.sourceArgs cannot be null");
+    this.sourceData = sourceData;
+    this.sourceArgs = sourceArgs;
+  }
 
   @Override
-  public default float[] samplesAt_impl(long position, float[] arr, int arrStart, int arrEnd) {
+  public long begin() {
+    return sourceData.begin();
+  }
+
+  @Override
+  public long end() {
+    return sourceData.end();
+  }
+  
+  abstract float zip(long position, float data, float arg);
+
+  @Override
+  public float[] samplesAt_impl(long position, float[] arr, final int arrStart, int arrEnd) {
+    arr = sourceData.samplesAt(position, arrEnd, arr, arrStart);
     for (int i = arrStart; i < arrEnd; i++) {
-      arr[i] = sampleAt(position+i);
+      arr[i] = zip(position+i, arr[i]);
     }
     return arr;
   }

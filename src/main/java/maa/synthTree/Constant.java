@@ -27,16 +27,15 @@ package maa.synthTree;
  *
  * @author maartyl
  */
-public interface Gen extends SynthNode {
-  
-  float sampleAt(long position);
+public final class Constant implements Gen {
+  private final float value;
 
-  @Override
-  public default float[] samplesAt_impl(long position, float[] arr, int arrStart, int arrEnd) {
-    for (int i = arrStart; i < arrEnd; i++) {
-      arr[i] = sampleAt(position+i);
-    }
-    return arr;
+  public Constant(float value) {
+    this.value = value;
   }
   
+  @Override
+  public float sampleAt(long position) {
+    return value;  
+  }
 }
